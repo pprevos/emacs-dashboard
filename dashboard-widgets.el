@@ -449,7 +449,7 @@ If MESSAGEBUF is not nil then MSG is also written in message buffer."
   "Insert a page break line in dashboard buffer."
   (dashboard-append dashboard-page-separator))
 
-(defun dashboard-insert-heading (heading &optional shortcut)
+(defun dashboard-insert-heading (heading &optional shortcut icon)
   "Insert a widget HEADING in dashboard buffer, adding SHORTCUT if provided."
   (when (and (display-graphic-p) dashboard-set-heading-icons)
     ;; Try loading `all-the-icons'
@@ -474,7 +474,9 @@ If MESSAGEBUF is not nil then MSG is also written in message buffer."
              ((string-equal heading "Projects:")
               (all-the-icons-octicon (cdr (assoc 'projects dashboard-heading-icons))
                                      :height 1.2 :v-adjust 0.0 :face 'dashboard-heading))
-             (t " ")))
+             (t (if icon (all-the-icons-octicon icon :height 1.2 :v-adjust 0.0 :face
+                                                'dashboard-heading)
+                  " "))))
     (insert " "))
 
   (insert (propertize heading 'face 'dashboard-heading))
